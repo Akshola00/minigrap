@@ -14,7 +14,6 @@ fn main() {
         println!("Application error: {}", e);
         process::exit(1);
     }
-    run(parsed_data);
 
 
 }

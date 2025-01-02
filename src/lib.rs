@@ -6,8 +6,8 @@ pub fn run(config: Data) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-pub fn search (query: &str, contents: &str) -> Vec<&str> {
-
+pub fn search<'a> (query: &str, contents: &'a str) -> Vec<&'a str> {
+    Vec::new()
 }
 pub struct Data {
     pub query: String,

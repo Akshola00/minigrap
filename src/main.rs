@@ -1,4 +1,4 @@
-use std::{env, fs, process};
+use std::{{env, fs, process}, error::Error};
 fn main() {
     let args: Vec<String> = env::args().collect();
 
@@ -10,13 +10,17 @@ fn main() {
     // println!("Searching for {}", query);
     // println!("In file {}", filename);
     println!("{:?}", args);
+    if let Err(e) = run(parsed_data) {
+        println!("Application error: {}", e);
+        process::exit(1);
+    }
     run(parsed_data);
 
 
 }
-fn run(config: Data) {
-    let contents = fs::read_to_string(config.filename).expect("error trying to read the file");
-    println!("With text:\n{}", contents);
+fn run(config: Data) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(config.filename)?;
+    Ok(())
 }
 struct Data {
     query: String,

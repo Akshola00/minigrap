@@ -2,12 +2,19 @@ use std::{fs, error::Error};
 
 pub fn run(config: Data) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.filename)?;
-    print!("With text:\n{}", contents);
+    let result = search(&config.query, &contents);
+    println!("With text:\n{}\nFound matches:\n{:?}", contents, result);
     Ok(())
 }
 
 pub fn search<'a> (query: &str, contents: &'a str) -> Vec<&'a str> {
-    Vec::new()
+    let mut all_matches:Vec<&str> = Vec::new();
+    for line in contents.lines() {
+        if line.contains(query) {
+            all_matches.push(line);
+        }
+    }
+    all_matches
 }
 pub struct Data {
     pub query: String,

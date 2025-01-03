@@ -10,7 +10,7 @@ pub fn run(config: Data) -> Result<(), Box<dyn Error>> {
 pub fn search<'a> (query: &str, contents: &'a str) -> Vec<&'a str> {
     let mut all_matches:Vec<&str> = Vec::new();
     for line in contents.lines() {
-        if line.contains(query) {
+        if line.to_lowercase().contains(&query.to_lowercase()) {
             all_matches.push(line);
         }
     }

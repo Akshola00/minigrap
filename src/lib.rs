@@ -4,8 +4,10 @@ pub fn run(config: Data) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.filename)?;
     let result = if config.case_sensitive {
         search(&config.query, &contents);
+        print!("true");
     } else {
-        search_case_sensitive(&config.query, &contents)
+        search_case_sensitive(&config.query, &contents);
+        print!("false");
     };
 
     println!("With text:\n{}\nFound matches:\n{:?}", contents, result);
@@ -44,7 +46,7 @@ impl Data {
         }
         let query = args[1].clone();
         let filename = args[2].clone();
-        let case_sensitive = args[3].clone();
+        let case_sensitive = args[3].parse().map_err(|_| "case sensitive must be true or false")?;
        Ok(Data {query, filename, case_sensitive})
     }
 }
